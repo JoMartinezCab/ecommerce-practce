@@ -1,0 +1,63 @@
+<!-- SideBar -->
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav mode="push">
+    <mat-toolbar>
+      <span [routerLink]="">Menú</span>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-nav-list>
+      <mat-list-item
+        *ngFor="let item of sidebarItems"
+        [routerLink]="item.url"
+        (clck)="sidenav.toggle()"
+      >
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+        {{ item.label }}
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- navBar -->
+  <mat-toolbar>
+    <mat-toolbar-row class="flex justify-content-between">
+      <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+        (click)="sidenav.toggle()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <div>
+        <button
+          mat-button
+          [matMenuTriggerFor]="menu" #menuTrigger
+          mat-icon-button
+          class="example-icon favorite-icon"
+          aria-label="Example icon-button with heart icon"
+        >
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Open dialog</button>
+        </mat-menu>
+          <mat-icon>shopping_cart</mat-icon>
+
+        <button
+          mat-icon-button
+          class="example-icon"
+          aria-label="Example icon-button with share icon"
+        >
+          <mat-icon>person</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="container p-3">
+    <ng-content></ng-content>
+  </div>
+</mat-sidenav-container>

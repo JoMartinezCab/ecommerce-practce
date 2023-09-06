@@ -1,0 +1,30 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title class="truncateLongTexts"
+      [matTooltip]="title">{{ title }}</mat-card-title>
+  </mat-card-header>
+  <img
+    mat-card-image
+    [src]="image"
+    [alt]="title"
+  />
+  <mat-card-content>
+    <p class="truncateLongTexts"
+      [matTooltip]="description">
+      {{ description }}
+    </p>
+    <span class="price">{{ price | currency }}</span>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="flex justify-content-between">
+      <button mat-raised-button color="accent">
+        <mat-icon fontIcon="visibility"></mat-icon>
+        Ver más
+      </button>
+      <button mat-raised-button color="warn">
+        Agregar al carrito
+        <mat-icon fontIcon="shopping_cart"></mat-icon>
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

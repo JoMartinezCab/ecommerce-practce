@@ -8,7 +8,6 @@ import { ProductComponent } from './pages/product/product.component';
 import { AddToCartComponent } from './components/add-to-cart/add-to-cart.component';
 
 
-
 @NgModule({
   declarations: [
     ProductListComponent,

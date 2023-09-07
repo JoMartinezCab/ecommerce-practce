@@ -6,8 +6,7 @@
       {{ title }}
     </mat-card-title>
   </mat-card-header>
-  <img
-    [routerLink]="['/products', id]"
+  <img [routerLink]="['/products', id]"
     mat-card-image
     [src]="image"
     [alt]="title"
@@ -17,6 +16,7 @@
       [matTooltip]="description">
       {{ description }}
     </p>
+    <p [routerLink]="['/products/by', category]">{{ category }}</p>
     <span class="price">{{ price | currency }}</span>
   </mat-card-content>
   <mat-card-actions>

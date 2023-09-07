@@ -20,7 +20,9 @@
       <div class="card-container">
         <div class="breadcrumb">
           <span [routerLink]="['/products']">Inicio</span>
-          <span>{{ product.category }}</span>
+          <span [routerLink]="['/products/by', product.category]">
+            {{ product.category }}
+          </span>
           <span class="active">{{ product.title }}</span>
         </div>
 

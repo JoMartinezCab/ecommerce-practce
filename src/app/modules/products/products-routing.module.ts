@@ -8,6 +8,9 @@ const routes:Routes = [{
   path: '',
   component: ProductListComponent
 },{
+  path:'by/:category',
+  component: ProductListComponent
+},{
   path:':id',
   component: ProductComponent
 }]

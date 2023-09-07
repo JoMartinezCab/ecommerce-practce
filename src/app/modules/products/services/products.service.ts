@@ -22,7 +22,13 @@ export class ProductsService {
   }
 
   getProductById( id:string ):Observable<Products>{
-    const url = `${ this.apiUrl }/products/${ id }`
+    const url = `${ this.apiUrl }/products/${ id }`;
+
+    return this.httpClient.get<Products>(url)
+  }
+
+  getProductByCategory( category:string ):Observable<Products>{
+    const url = `${ this.apiUrl }/products/category/${ category }`;
 
     return this.httpClient.get<Products>(url)
   }

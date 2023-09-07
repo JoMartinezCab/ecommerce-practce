@@ -17,6 +17,9 @@ export class ProductCardComponent {
   public description:string = '';
 
   @Input()
+  public category:string = '';
+
+  @Input()
   public price:number = 0;
 
   @Input()

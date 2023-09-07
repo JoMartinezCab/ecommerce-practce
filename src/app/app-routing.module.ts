@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PaymentComponent } from './modules/payment/components/payment/payment.component';
 
 const routes: Routes = [{
   path: 'products',
@@ -13,6 +14,9 @@ const routes: Routes = [{
   path: 'users',
   loadChildren: () => import('./modules/users/users.module')
     .then(m => m.UsersModule)
+}, {
+  path: 'payment',
+  component: PaymentComponent
 },{
   path: '**',
   redirectTo: 'Products'

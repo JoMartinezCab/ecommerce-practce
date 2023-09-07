@@ -13,8 +13,7 @@
       <mat-list-item
         *ngFor="let item of sidebarItems"
         [routerLink]="item.url"
-        (clck)="sidenav.toggle()"
-      >
+        (clck)="sidenav.toggle()">
         <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
         {{ item.label }}
       </mat-list-item>
@@ -28,36 +27,52 @@
         mat-icon-button
         class="example-icon"
         aria-label="Example icon-button with menu icon"
-        (click)="sidenav.toggle()"
-      >
+        (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
 
       <div>
         <button
           mat-button
-          [matMenuTriggerFor]="menu" #menuTrigger
-          mat-icon-button
-          class="example-icon favorite-icon"
-          aria-label="Example icon-button with heart icon"
-        >
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>Open dialog</button>
-        </mat-menu>
+          [matMenuTriggerFor]="menuCart"
+          #menuTrigger>
           <mat-icon>shopping_cart</mat-icon>
+        </button>
+
+        <mat-menu #menuCart="matMenu">
+          <button mat-menu-item></button>
+        </mat-menu>
 
         <button
-          mat-icon-button
-          class="example-icon"
-          aria-label="Example icon-button with share icon"
-        >
+          mat-button
+          [matMenuTriggerFor]="menu"
+          #menuTrigger>
           <mat-icon>person</mat-icon>
         </button>
+        <mat-menu #menu="matMenu">
+          <div *ngIf="userExist(); else notAuth">
+            <button mat-menu-item
+              [routerLink]="['/users', user.id]">
+              {{ user.username }}
+            </button>
+            <button mat-menu-item
+              (click)="closeSesion()">
+              cerrar sesion
+              <mat-icon>logout</mat-icon>
+            </button>
+          </div>
+          <ng-template #notAuth>
+            <button mat-menu-item
+              [routerLink]="'/auth/logn'">
+              Iniciar sesion
+            </button>
+          </ng-template>
+        </mat-menu>
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <div class="container p-3">
+  <div class="p-3">
     <ng-content></ng-content>
   </div>
 </mat-sidenav-container>

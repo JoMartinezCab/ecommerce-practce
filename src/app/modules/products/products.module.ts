@@ -5,6 +5,7 @@ import { ProductsRoutingModules } from './products-routing.module';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { MaterialModule } from '../material/material.module';
 import { ProductComponent } from './pages/product/product.component';
+import { AddToCartComponent } from './components/add-to-cart/add-to-cart.component';
 
 
 
@@ -12,7 +13,8 @@ import { ProductComponent } from './pages/product/product.component';
   declarations: [
     ProductListComponent,
     ProductCardComponent,
-    ProductComponent
+    ProductComponent,
+    AddToCartComponent
   ],
   imports: [
     CommonModule,

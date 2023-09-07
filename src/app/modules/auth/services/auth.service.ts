@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment.development';
 import { User } from '../interfaces/auth.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, catchError, map, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class AuthService {
 
   constructor(
     private httpClient:HttpClient,
+    private router:Router,
   ){}
 
   authUser( user:object ):Observable<boolean>{
@@ -42,13 +44,13 @@ export class AuthService {
     return false;
   }
 
-  checkAuth():any{
-    console.log(localStorage.getItem('user'));
-    // return JSON.parse(user);
+  checkAuth():string | null{
+    return localStorage.getItem('user');
   }
 
   logout(){
     this.user = undefined;
-    localStorage.clear()
+    localStorage.clear();
+    this.router.navigate(['./products'])
   }
 }

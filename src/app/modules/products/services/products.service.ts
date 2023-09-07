@@ -15,14 +15,14 @@ export class ProductsService {
     private httpClient:HttpClient
   ) { }
 
-  // getProducts():Observable<Product>{
-  //   const url = `${ this.apiUrl }/products`;
-
-  //   return this.httpClient.get<Product>(url);
-  // }
-
   getProducts():Observable<Products>{
     const url = `${ this.apiUrl }/products`;
+
+    return this.httpClient.get<Products>(url)
+  }
+
+  getProductById( id:string ):Observable<Products>{
+    const url = `${ this.apiUrl }/products/${ id }`
 
     return this.httpClient.get<Products>(url)
   }

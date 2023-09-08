@@ -5,20 +5,22 @@ import { ProductsRoutingModules } from './products-routing.module';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { MaterialModule } from '../material/material.module';
 import { ProductComponent } from './pages/product/product.component';
-import { AddToCartComponent } from './components/add-to-cart/add-to-cart.component';
+import { SharedModule } from '../shared/shared.module';
+import { CartModule } from '../cart/cart.module';
 
 
 @NgModule({
   declarations: [
     ProductListComponent,
     ProductCardComponent,
-    ProductComponent,
-    AddToCartComponent
+    ProductComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ProductsRoutingModules,
+    SharedModule,
+    CartModule
   ]
 })
 export class ProductsModule { }

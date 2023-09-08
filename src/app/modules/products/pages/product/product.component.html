@@ -44,8 +44,14 @@
         <span class="divider"></span>
 
         <div class="product-btn-group">
-          <div class="button buy-now"><i class='bx bxs-zap' ></i>Comprar</div>
-          <div class="button add-cart"><i class='bx bxs-cart' ></i>Añadir al carrito</div>
+          <div class="button buy-now" (click)="addToCart(product.id.toString())">
+            <i class='bx bxs-zap' ></i>
+            Comprar
+          </div>
+          <div class="button add-cart">
+            <i class='bx bxs-cart' ></i>
+            Añadir al carrito
+          </div>
         </div>
       </div>
     </div>

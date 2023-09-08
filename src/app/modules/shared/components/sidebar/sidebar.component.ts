@@ -10,9 +10,7 @@ import { User } from 'src/app/modules/auth/interfaces/auth.interface';
 export class SidebarComponent{
 
   public sidebarItems = [
-    { label: 'Inicio', icon: '', url:'' },
-    { label: 'categoria', icon: '', url:'./category' },
-    { label: 'usuario', icon: '', url:'./user' }
+    { label: 'Inicio', icon: '', url:'/products' }
   ]
 
   public user:any = [];

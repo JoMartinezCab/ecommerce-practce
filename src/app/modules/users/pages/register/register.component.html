@@ -1,5 +1,5 @@
 <div class="grip p-3">
-  <div class="col-12 mt-5 md:col-6 md:col-offset-3">
+  <div class="col-12 mt-1 md:col-6 md:col-offset-3">
     <form [formGroup]="registerForm" (ngSubmit)="onSave()">
       <div class="flex flex-column">
         <span class="text-lg mb-4">Registro</span>
@@ -69,5 +69,12 @@
         </button>
       </div>
     </form>
+  </div>
+  <div class="col-12 mt-2 md:col-6 md:col-offset-3 md:mt-3">
+    <span [routerLink]="['/auth/login']">Iniciar sesión</span>
+  </div>
+  <div class="col-12 mt-1 md:col-6 md:col-offset-3 disclaimer">
+    <p>* Añadir un nuevo usuario no lo añadirá al servidor.
+      Simulará una petición POST y devolverá el nuevo usuario creado con un nuevo id</p>
   </div>
 </div>

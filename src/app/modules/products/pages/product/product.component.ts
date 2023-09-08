@@ -36,4 +36,9 @@ export class ProductComponent implements OnInit {
   changeImage( img:string ){
     this.defaultImage = img;
   }
+
+  addToCart( id:string ){
+
+    this.productsService.productModal(id);
+  }
 }

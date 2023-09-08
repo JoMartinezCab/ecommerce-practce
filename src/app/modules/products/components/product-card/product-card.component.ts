@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'product-card',
@@ -27,4 +28,13 @@ export class ProductCardComponent {
 
   @Input()
   public thumbnail:string = '';
+
+  constructor(
+    private productsService:ProductsService
+  ) {}
+
+  addToCart( id:string ){
+
+    this.productsService.productModal(id);
+  }
 }

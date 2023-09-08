@@ -6,57 +6,74 @@ import { Product } from 'src/app/modules/products/interfaces/products.interface'
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.css']
+  styleUrls: ['./payment.component.css'],
 })
-export class PaymentComponent implements OnInit{
-
+export class PaymentComponent implements OnInit {
   public total = 0;
-  public cart:any[] = [];
-  public products:Product[] = [];
+  public cart: any[] = [];
+  public products: Product[] = [];
 
-  @ViewChild('paymentRef', {static: true}) paymentRef!: ElementRef;
+  @ViewChild('paymentRef', { static: true }) paymentRef!: ElementRef;
 
   constructor(
-    private router:Router,
-    private productsService:ProductsService
-    // private payment: PaymentService
-  ){}
+    private router: Router,
+    private productsService: ProductsService // private payment: PaymentService
+  ) {}
 
   ngOnInit(): void {
-    // this.amount = this.payment.totalAmount
+    this.paypalRender();
     this.getCart();
     this.getTotal();
-    window.paypal.Buttons({
-      createorder: (data: any, actions:any) => {
-        return actions.order.create({
-          purchase_units: [
-            {}
-          ]
-        })
-      }
-    }).render(this.paymentRef.nativeElement);
   }
 
-  cancel(){
+  cancel() {
     this.router.navigate(['cart']);
   }
 
-  getCart(){
+  getCart() {
     this.cart = JSON.parse(localStorage.getItem('cart')!);
 
-    this.productsService.getProducts()
-      .subscribe(data => {
-        this.products = data.products.filter(
-          el => this.cart.find(
-            element => element.id == el.id
-            )
-          )
+    this.productsService.getProducts().subscribe((data) => {
+      this.products = data.products.filter((el) =>
+        this.cart.find((element) => {
+          if (element.id == el.id) this.total += el.price * element.quantity;
 
-         console.log(this.products) ;
-      });
+          return element.id == el.id;
+        })
+      );
+    });
   }
 
-  getTotal(){
+  getTotal() {
     this.products;
+  }
+
+  paypalRender() {
+    window.paypal
+      .Buttons({
+        createorder: (data: any, actions: any) => {
+          return actions.order.create({
+            purchase_units: [{
+              amount:{
+                value: this.total.toString(),
+                currency_code: 'USD',
+                item_total:{
+                  currency_code: 'USD',
+                  value: '7.50'
+                }
+              }
+            }],
+          });
+        },
+        onApprove: (data: any, actions: any) => {
+          return actions.order.capture().then((details:any) => {
+            console.log(details);
+          })
+        },
+        onError: (error: any) => {
+          console.log(error);
+        }
+      })
+      .render(this.paymentRef.nativeElement);
   }
 }

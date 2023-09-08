@@ -1,6 +1,6 @@
 <div class="grid container">
   <div class="paypal-container">
-    <div class="ammount">Total a pagar: ${{ total }}</div>
+    <div class="ammount">Total a pagar: {{ total | currency }}</div>
     <div class="info">No refrescar el navegador mientras la transaccion esta en proceso</div>
 
     <div #paymentRef></div>

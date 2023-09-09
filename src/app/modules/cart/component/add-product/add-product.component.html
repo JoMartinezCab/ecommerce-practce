@@ -1,8 +1,8 @@
 <div class="felx justify-content-between">
-  <div class="col-12 md:col-6 lg:col-6" >
+  <div class="col-12 md:col-6 lg:col-6">
     <img [src]="data.thumbnail" />
   </div>
-  <div class="col-12 md:col-6 lg:col-6 ">
+  <div class="col-12 md:col-6 lg:col-6">
     <div class="row pt-2">
       <h2>{{ data.title }}</h2>
       <span>Precio: {{ data.price | currency }}</span>
@@ -12,7 +12,7 @@
       <button mat-raised-button color="primary" (click)="decrement()">
         <mat-icon>remove</mat-icon>
       </button>
-      <input type="text" [value]="quantity" disabled>
+      <input type="text" [value]="quantity" disabled />
       <button mat-raised-button color="accent" (click)="increment()">
         <mat-icon>add</mat-icon>
       </button>
@@ -23,12 +23,24 @@
     </div>
     <div class="row pt-2">
       <button
+        [disabled]="total === 0"
         mat-button
         mat-flat-button
         color="primary"
-        (click)="saveCart()">
+        (click)="saveCart()"
+        mat-dialog-close
+      >
         <mat-icon>save</mat-icon>
         Añadir
+      </button>
+      <button
+        mat-button
+        mat-flat-button
+        color="warm"
+        mat-dialog-close
+      >
+        <mat-icon>save</mat-icon>
+        Cancelar
       </button>
     </div>
   </div>

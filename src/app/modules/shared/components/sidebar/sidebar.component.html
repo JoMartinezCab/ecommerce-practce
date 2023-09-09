@@ -1,6 +1,7 @@
 <!-- SideBar -->
 <mat-sidenav-container fullscreen>
   <mat-sidenav #sidenav mode="push">
+
     <mat-toolbar>
       <span [routerLink]="">Menú</span>
       <span class="spacer"></span>
@@ -12,7 +13,7 @@
     <mat-nav-list>
       <mat-list-item
         *ngFor="let item of sidebarItems"
-        [routerLink]="item.url"
+        [routerLink]="[item.url]"
         (clck)="sidenav.toggle()">
         <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
         {{ item.label }}
@@ -35,7 +36,8 @@
         <button
           mat-button
           [matMenuTriggerFor]="menuCart"
-          #menuTrigger>
+          #menuTrigger
+          class="shoppingCart">
           <mat-icon>shopping_cart</mat-icon>
         </button>
 
@@ -43,27 +45,23 @@
           <button mat-menu-item></button>
         </mat-menu>
 
-        <button
-          mat-button
-          [matMenuTriggerFor]="menu"
-          #menuTrigger>
+        <button mat-button [matMenuTriggerFor]="menu" #menuTrigger>
           <mat-icon>person</mat-icon>
         </button>
+
         <mat-menu #menu="matMenu">
           <div *ngIf="userExist(); else notAuth">
-            <button mat-menu-item
-              [routerLink]="['/users', user.id]">
+            <button mat-menu-item [routerLink]="['/users', user.id]">
               {{ user.username }}
             </button>
-            <button mat-menu-item
-              (click)="closeSesion()">
+            <button mat-menu-item (click)="closeSesion()">
               cerrar sesion
               <mat-icon>logout</mat-icon>
             </button>
           </div>
+
           <ng-template #notAuth>
-            <button mat-menu-item
-              [routerLink]="'/auth/logn'">
+            <button mat-menu-item [routerLink]="'/auth/logn'">
               Iniciar sesion
             </button>
           </ng-template>

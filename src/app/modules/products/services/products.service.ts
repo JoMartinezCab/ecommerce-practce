@@ -37,6 +37,12 @@ export class ProductsService {
     return this.httpClient.get<Products>(url)
   }
 
+  getCategoriesProducts(){
+    const url = `${ this.apiUrl }/products/categories`;
+
+    return this.httpClient.get(url)
+  }
+
   productModal( id:string ){
     const dialogConfig = new MatDialogConfig();
 
@@ -49,5 +55,11 @@ export class ProductsService {
           data: product
         })
       )
+  }
+
+  getProdutcByName( name:string ){
+    const url = `${ this.apiUrl }/products/search?q=${ name }`;
+
+    return this.httpClient.get<Products>(url)
   }
 }

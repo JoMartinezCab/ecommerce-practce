@@ -11,6 +11,8 @@ import { CartService } from 'src/app/modules/cart/services/CartService';
 export class PaymentComponent implements OnInit {
   public total = 0;
   public cart: any[] = [];
+  public displayedColumns:string[] = ['eliminar', 'Producto', 'Cantidad', 'Precio']
+
 
   @ViewChild('paymentRef', { static: true }) paymentRef!: ElementRef;
 
@@ -24,6 +26,7 @@ export class PaymentComponent implements OnInit {
     this.total = this.cartService.totalCart(this.cart);
 
     this.cartService.watch().subscribe((value) => {
+      console.log(value);
       if (value != undefined) this.cart = JSON.parse(value);
     });
   }
@@ -66,5 +69,16 @@ export class PaymentComponent implements OnInit {
         }
       }
     ).render(this.paymentRef.nativeElement);
+  }
+
+  removeAll(){
+    this.cartService.removeAllProducts();
+    this.cart = [];
+    this.total = 0;
+  }
+
+  removeItem(posiion:number){
+    this.cart = this.cartService.removeProduct(posiion);
+    this.total = this.cartService.totalCart(this.cart);
   }
 }

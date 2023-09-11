@@ -11,11 +11,12 @@ import { CartService } from 'src/app/modules/cart/services/CartService';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
+  public displayedColumns:string[] = ['eliminar', 'Producto', 'Cantidad', 'Precio']
   public sidebarItems: any = [];
   public user: any = [];
   public categories: any = [];
-  public cart: any = [];
-  public total:number = 0;
+  public cart: any[] = [];
+  public total: number = 0;
 
   constructor(
     private authService: AuthService,
@@ -24,19 +25,19 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.sidebarItems.length === 0)
-      this.getCategoriesProduct();
+    if (this.sidebarItems.length === 0) this.getCategoriesProduct();
 
     this.cart = this.cartService.getCart();
 
-    this.total = this.cartService.totalCart(this.cart);
+    console.log(this.cart);
 
-    this.cartService.watch()
-    .subscribe(
-      value => {
-        if(value != undefined) this.cart = JSON.parse(value)
-      }
-    )
+    if (this.cart && this.cart.length > 0) {
+      this.total = this.cartService.totalCart(this.cart);
+
+      this.cartService.watch().subscribe((value) => {
+        if (value != undefined) this.cart = JSON.parse(value);
+      });
+    }
   }
 
   userExist() {
@@ -54,20 +55,18 @@ export class SidebarComponent implements OnInit {
   }
 
   getCategoriesProduct() {
-    this.productsService.getCategoriesProducts()
-      .subscribe((categories) =>{
-        this.categories = categories;
+    this.productsService.getCategoriesProducts().subscribe((categories) => {
+      this.categories = categories;
 
-        this.sidebarItems.push({ label: 'Inicio', icon: '', url: '' });
+      this.sidebarItems.push({ label: 'Inicio', icon: '', url: '' });
 
-        this.categories.forEach((category: any) => {
-          this.sidebarItems.push({
-            label: category,
-            icon: '',
-            url: `/products/by/${category}`,
-          });
-        })
-      }
-    );
+      this.categories.forEach((category: any) => {
+        this.sidebarItems.push({
+          label: category,
+          icon: '',
+          url: `/products/by/${category}`,
+        });
+      });
+    });
   }
 }

@@ -22,37 +22,43 @@
   </mat-sidenav>
 
   <!-- navBar -->
-  <mat-toolbar>
+  <mat-toolbar color="primary">
     <mat-toolbar-row class="flex justify-content-between">
-      <button
-        mat-icon-button
-        class="example-icon"
-        aria-label="Example icon-button with menu icon"
-        (click)="sidenav.toggle()"
-      >
-        <mat-icon>menu</mat-icon>
-      </button>
+      <div class="row flex justify-content-between align-items-center">
+        <button
+          mat-icon-button
+          class="example-icon"
+          (click)="sidenav.toggle()"
+          aria-label="Example icon-button with menu icon"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+        <h1 [routerLink]="['./']">Ecommerce</h1>
+      </div>
 
       <div>
         <button
           mat-button
           [matMenuTriggerFor]="menuCart"
           #menuTrigger
-          class="shoppingCart">
+          class="shoppingCart"
+        >
           <mat-icon>shopping_cart</mat-icon>
         </button>
 
-        <mat-menu #menuCart="matMenu">
-          <table>
+        <mat-menu #menuCart="matMenu" class="cartProducts">
+          <button mat-button color="warn">Remover todo</button>
+          <!-- <table *ngIf="cart && cart.length > 0; else cartEmpty">
             <thead>
               <tr>
                 <th>Producto</th>
                 <th>Cantidad</th>
                 <th>Precio unidad</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of cart">
+              <tr *ngFor="let item of cart; let i=index">
                 <td>
                   {{ item.title }}
                 </td>
@@ -62,21 +68,72 @@
                 <td>
                   {{ item.price | currency }}
                 </td>
+                <td>
+                  <button mat-icon-button color="warn">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
-                Total:{{ total | currency }}
+                Total:{{
+                  total | currency
+                }}
               </tr>
-              <tr>
+              <tr class="flex align-items-end">
                 <button
-                  mat-menu-item
-                  [routerLink]="['./payment/process']">
+                  mat-raised-button
+                  color="primary"
+                  [routerLink]="['./payment/process']"
+                >
                   Pagar
                 </button>
               </tr>
             </tfoot>
-          </table>
+          </table> -->
+
+          <div class="row">
+            <table mat-table [dataSource]="cart" class="mat-elevation-z8">
+              <!-- Checkbox Column -->
+              <ng-container matColumnDef="eliminar">
+                <th mat-header-cell *matHeaderCellDef>
+
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <button mat-icon-button color="warn">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Producto">
+                <th mat-header-cell *matHeaderCellDef>Producto</th>
+                <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="Cantidad">
+                <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+                <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="Precio">
+                <th mat-header-cell *matHeaderCellDef>Precio</th>
+                <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: displayedColumns"
+              ></tr>
+            </table>
+          </div>
+          <ng-template #cartEmpty>
+            <p>
+              Aun no se han agregado productos al carrito
+            </p>
+          </ng-template>
         </mat-menu>
 
         <button mat-button [matMenuTriggerFor]="menu" #menuTrigger>

@@ -1,7 +1,6 @@
 <!-- SideBar -->
 <mat-sidenav-container fullscreen>
   <mat-sidenav #sidenav mode="push">
-
     <mat-toolbar>
       <span [routerLink]="">Menú</span>
       <span class="spacer"></span>
@@ -14,7 +13,8 @@
       <mat-list-item
         *ngFor="let item of sidebarItems"
         [routerLink]="[item.url]"
-        (clck)="sidenav.toggle()">
+        (clck)="sidenav.toggle()"
+      >
         <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
         {{ item.label }}
       </mat-list-item>
@@ -28,7 +28,8 @@
         mat-icon-button
         class="example-icon"
         aria-label="Example icon-button with menu icon"
-        (click)="sidenav.toggle()">
+        (click)="sidenav.toggle()"
+      >
         <mat-icon>menu</mat-icon>
       </button>
 
@@ -42,13 +43,40 @@
         </button>
 
         <mat-menu #menuCart="matMenu">
-          <button mat-menu-item>
-            <ul>
-              <li *ngFor="let item of cart">
-                {{item.quantity}}
-              </li>
-            </ul>
-          </button>
+          <table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio unidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of cart">
+                <td>
+                  {{ item.title }}
+                </td>
+                <td>
+                  {{ item.quantity | number }}
+                </td>
+                <td>
+                  {{ item.price | currency }}
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                Total:{{ total | currency }}
+              </tr>
+              <tr>
+                <button
+                  mat-menu-item
+                  [routerLink]="['./payment/process']">
+                  Pagar
+                </button>
+              </tr>
+            </tfoot>
+          </table>
         </mat-menu>
 
         <button mat-button [matMenuTriggerFor]="menu" #menuTrigger>

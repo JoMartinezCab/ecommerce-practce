@@ -3,7 +3,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { User } from 'src/app/modules/auth/interfaces/auth.interface';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { map } from 'rxjs';
-import { CartService } from 'src/app/modules/cart/services/cart.service';
+import { CartService } from 'src/app/modules/cart/services/CartService';
 
 @Component({
   selector: 'shared-sidebar',
@@ -15,6 +15,7 @@ export class SidebarComponent implements OnInit {
   public user: any = [];
   public categories: any = [];
   public cart: any = [];
+  public total:number = 0;
 
   constructor(
     private authService: AuthService,
@@ -26,7 +27,16 @@ export class SidebarComponent implements OnInit {
     if (this.sidebarItems.length === 0)
       this.getCategoriesProduct();
 
-    this.getCart();
+    this.cart = this.cartService.getCart();
+
+    this.total = this.cartService.totalCart(this.cart);
+
+    this.cartService.watch()
+    .subscribe(
+      value => {
+        if(value != undefined) this.cart = JSON.parse(value)
+      }
+    )
   }
 
   userExist() {
@@ -59,13 +69,5 @@ export class SidebarComponent implements OnInit {
         })
       }
     );
-  }
-
-  getCart(){
-    this.cartService.getCart().subscribe(
-      (cart: any) => this.cart = cart
-    );
-
-    console.log(this.cart);
   }
 }

@@ -6,6 +6,7 @@ import {
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from 'src/app/modules/products/interfaces/products.interface';
+import { CartService } from '../../services/CartService';
 
 @Component({
   selector: 'app-add-product',
@@ -19,7 +20,8 @@ export class AddProductComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: Product,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private cartService:CartService
   ) {}
 
   decrement() {
@@ -37,43 +39,7 @@ export class AddProductComponent {
   }
 
   saveCart() {
-    let products = [];
-    let productExist: boolean = false;
-
-    if (localStorage.getItem('cart')) {
-      products = JSON.parse(localStorage.getItem('cart')!);
-      productExist = products.some(
-        (product: any) => product.id === this.data.id
-      );
-
-      productExist
-        ? products.forEach((product: any) => {
-            if (product.id === this.data.id) {
-              product.quantity += this.quantity;
-              product.total += this.data.price * this.quantity;
-
-              return;
-            }
-          })
-        : products.push({
-            id: this.data.id,
-            title: this.data.title,
-            price: this.data.price,
-            quantity: this.quantity,
-            total: this.data.price * this.quantity,
-          });
-    }
-    else{
-      products.push({
-        id: this.data.id,
-        title: this.data.title,
-        price: this.data.price,
-        quantity: this.quantity,
-        total: this.data.price * this.quantity,
-      });
-    }
-
-    localStorage.setItem('cart', JSON.stringify(products));
+    this.cartService.updateCart(this.data, this.quantity);
 
     this.showSnackBar(
       `Se agregaron ${this.quantity} ${this.data.title} al carrito`,

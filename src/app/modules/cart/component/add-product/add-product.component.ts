@@ -38,24 +38,40 @@ export class AddProductComponent {
 
   saveCart() {
     let products = [];
-    if (!localStorage.getItem('cart')){
-      products.push({ id: this.data.id, quantity: this.quantity });
+    let productExist: boolean = false;
+
+    if (localStorage.getItem('cart')) {
+      products = JSON.parse(localStorage.getItem('cart')!);
+      productExist = products.some(
+        (product: any) => product.id === this.data.id
+      );
+
+      productExist
+        ? products.forEach((product: any) => {
+            if (product.id === this.data.id) {
+              product.quantity += this.quantity;
+              product.total += this.data.price * this.quantity;
+
+              return;
+            }
+          })
+        : products.push({
+            id: this.data.id,
+            title: this.data.title,
+            price: this.data.price,
+            quantity: this.quantity,
+            total: this.data.price * this.quantity,
+          });
     }
-
-    // products = JSON.parse(localStorage.getItem('cart')!);
-
-      /*console.log(products);
-      products.some((product: any) => {
-        if (product.id === this.data.id) {
-          product.quantity += this.quantity;
-        }
-      });
-    } else {
+    else{
       products.push({
         id: this.data.id,
+        title: this.data.title,
+        price: this.data.price,
         quantity: this.quantity,
+        total: this.data.price * this.quantity,
       });
-    }*/
+    }
 
     localStorage.setItem('cart', JSON.stringify(products));
 

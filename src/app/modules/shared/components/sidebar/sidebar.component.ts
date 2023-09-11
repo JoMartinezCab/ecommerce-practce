@@ -3,6 +3,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { User } from 'src/app/modules/auth/interfaces/auth.interface';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
 import { map } from 'rxjs';
+import { CartService } from 'src/app/modules/cart/services/cart.service';
 
 @Component({
   selector: 'shared-sidebar',
@@ -13,13 +14,17 @@ export class SidebarComponent implements OnInit {
   public sidebarItems: any = [];
   public user: any = [];
   public categories: any = [];
+  public cart: any = [];
 
   constructor(
     private authService: AuthService,
+    private cartService: CartService,
     private productsService: ProductsService
   ) {}
 
   ngOnInit(): void {
+    this.getCart();
+
     if (this.sidebarItems.length === 0)
       this.getCategoriesProduct();
   }
@@ -43,7 +48,7 @@ export class SidebarComponent implements OnInit {
       .subscribe((categories) =>{
         this.categories = categories;
 
-        this.sidebarItems.push({ label: 'Inicio', icon: '', url: '/products' });
+        this.sidebarItems.push({ label: 'Inicio', icon: '', url: '' });
 
         this.categories.forEach((category: any) => {
           this.sidebarItems.push({
@@ -54,5 +59,13 @@ export class SidebarComponent implements OnInit {
         })
       }
     );
+  }
+
+  getCart(){
+    this.cartService.getCart().subscribe(
+      (cart: any) => this.cart = cart
+    );
+
+    console.log(this.cart);
   }
 }

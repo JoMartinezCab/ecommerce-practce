@@ -42,10 +42,19 @@ export class ProductListComponent implements OnInit {
   }
 
   getProductsByName(term:string): void {
+    if(term === ''){
+      this.getProducts();
+      return;
+    }
+
     this.productsService
       .getProdutcByName(term)
       .subscribe((data) => (
         this.products = data.products
       ));
+  }
+
+  addToCart( id:string ){
+    this.productsService.productModal(id);
   }
 }

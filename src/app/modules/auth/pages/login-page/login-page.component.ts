@@ -52,7 +52,7 @@ export class LoginPageComponent {
       .subscribe(
         auth =>{
           (auth)
-          ? this.router.navigate(['./products'])
+          ? this.router.navigate(['./'])
           : this.showSnackBar('Usuario y/o contraseña incorrectas', 'ok')
         }
       );

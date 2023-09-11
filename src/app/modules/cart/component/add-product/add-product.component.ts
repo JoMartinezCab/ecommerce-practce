@@ -38,8 +38,9 @@ export class AddProductComponent {
 
   saveCart() {
     let products = [];
-    if (!localStorage.getItem('cart'))
+    if (!localStorage.getItem('cart')){
       products.push({ id: this.data.id, quantity: this.quantity });
+    }
 
     // products = JSON.parse(localStorage.getItem('cart')!);
 
@@ -56,12 +57,12 @@ export class AddProductComponent {
       });
     }*/
 
-    /*localStorage.setItem('cart', JSON.stringify(products));
+    localStorage.setItem('cart', JSON.stringify(products));
 
     this.showSnackBar(
       `Se agregaron ${this.quantity} ${this.data.title} al carrito`,
       'ok'
-    );*/
+    );
   }
 
   showSnackBar(message: string, btnName: string): void {

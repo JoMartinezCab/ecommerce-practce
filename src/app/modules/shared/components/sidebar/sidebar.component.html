@@ -42,7 +42,13 @@
         </button>
 
         <mat-menu #menuCart="matMenu">
-          <button mat-menu-item></button>
+          <button mat-menu-item>
+            <ul>
+              <li *ngFor="let item of cart">
+                {{item.quantity}}
+              </li>
+            </ul>
+          </button>
         </mat-menu>
 
         <button mat-button [matMenuTriggerFor]="menu" #menuTrigger>
@@ -61,7 +67,7 @@
           </div>
 
           <ng-template #notAuth>
-            <button mat-menu-item [routerLink]="'/auth/logn'">
+            <button mat-menu-item [routerLink]="'/auth/login'">
               Iniciar sesion
             </button>
           </ng-template>

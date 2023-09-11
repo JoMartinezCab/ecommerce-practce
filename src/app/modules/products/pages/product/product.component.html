@@ -1,58 +1,58 @@
 <div class="grid">
-    <div class="col-12 md:col-6 lg:col-5 card">
-      <div class="card-container">
-        <div class="product-image">
-          <div class="product-image-main">
-            <img [src]="defaultImage" [alt]="product.title" />
-          </div>
-          <div class="product-image-slider grid">
-            <img class="col-12 md:col-6 lg:col-4 "
-              *ngFor="let image of product.images"
-              [src]="image"
-              [alt]="product.title"
-              (click)="changeImage(image)"
-              class="image-list"/>
-          </div>
+  <div class="col-12 md:col-6 lg:col-5 card">
+    <div class="card-container">
+      <div class="product-image">
+        <div class="product-image-main">
+          <img [src]="defaultImage" [alt]="product.title" />
+        </div>
+        <div class="product-image-slider grid">
+          <img
+            class="col-12 md:col-6 lg:col-4"
+            *ngFor="let image of product.images"
+            [src]="image"
+            [alt]="product.title"
+            (click)="changeImage(image)"
+            class="image-list"
+          />
         </div>
       </div>
     </div>
-    <div class="col-12 md:col-6 lg:col-7 card">
-      <div class="card-container">
-        <div class="breadcrumb">
-          <span [routerLink]="['/products']">Inicio</span>
-          <span [routerLink]="['/products/by', product.category]">
-            {{ product.category }}
-          </span>
-          <span class="active">{{ product.title }}</span>
+  </div>
+  <div class="col-12 md:col-6 lg:col-7 card">
+    <div class="card-container">
+      <div class="breadcrumb">
+        <span [routerLink]="['/products']">Inicio</span>
+        <span [routerLink]="['/products/by', product.category]">
+          {{ product.category }}
+        </span>
+        <span class="active">{{ product.title }}</span>
+      </div>
+
+      <div class="product">
+        <div class="product-title">
+          <h2>{{ product.title }}</h2>
         </div>
+      </div>
 
-        <div class="product">
-          <div class="product-title">
-            <h2>{{ product.title }}</h2>
-          </div>
+      <div class="product-price">
+        <span class="offer-price">{{ product.price | currency }}</span>
+      </div>
+
+      <div class="product-details">
+        <h3>Descripcion</h3>
+        <p>{{ product.description }}</p>
+      </div>
+
+      <span class="divider"></span>
+
+      <div class="product-btn-group">
+        <div class="button buy-now" (click)="addToCart(product.id.toString())">
+          Comprar
         </div>
-
-        <div class="product-price">
-          <span class="offer-price">{{ product.price | currency }}</span>
-        </div>
-
-        <div class="product-details">
-          <h3>Descripcion</h3>
-          <p>{{ product.description }}</p>
-        </div>
-
-        <span class="divider"></span>
-
-        <div class="product-btn-group">
-          <div class="button buy-now" (click)="addToCart(product.id.toString())">
-            <i class='bx bxs-zap' ></i>
-            Comprar
-          </div>
-          <div class="button add-cart">
-            <i class='bx bxs-cart' ></i>
-            Añadir al carrito
-          </div>
+        <div class="button add-cart" (click)="addToCart(product.id.toString())">
+          Añadir al carrito
         </div>
       </div>
     </div>
+  </div>
 </div>

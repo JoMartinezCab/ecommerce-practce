@@ -23,10 +23,10 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCart();
-
     if (this.sidebarItems.length === 0)
       this.getCategoriesProduct();
+
+    this.getCart();
   }
 
   userExist() {

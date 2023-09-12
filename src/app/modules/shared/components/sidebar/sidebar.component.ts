@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
-import { User } from 'src/app/modules/auth/interfaces/auth.interface';
 import { ProductsService } from 'src/app/modules/products/services/products.service';
-import { map } from 'rxjs';
 import { CartService } from 'src/app/modules/cart/services/CartService';
 
 @Component({
@@ -11,7 +9,12 @@ import { CartService } from 'src/app/modules/cart/services/CartService';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-  public displayedColumns:string[] = ['eliminar', 'Producto', 'Cantidad', 'Precio']
+  public displayedColumns: string[] = [
+    'eliminar',
+    'Producto',
+    'Cantidad',
+    'Precio',
+  ];
   public sidebarItems: any = [];
   public user: any = [];
   public categories: any = [];
@@ -68,5 +71,17 @@ export class SidebarComponent implements OnInit {
         });
       });
     });
+  }
+
+  removeAll(){
+    this.cartService.removeAllProducts();
+    this.cart = [];
+    this.total = 0;
+  }
+
+  removeProduct(posiion:number){
+    console.log(posiion);
+    this.cart = this.cartService.removeProduct(posiion);
+    this.total = this.cartService.totalCart(this.cart);
   }
 }

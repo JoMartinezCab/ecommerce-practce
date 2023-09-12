@@ -62,12 +62,14 @@ export class PaymentComponent implements OnInit {
         },
         onApprove: (data: any, actions: any) => {
           return actions.order.capture().then((details: any) => {
-            if (details.status === 'COMPLETED')
+            if (details.status === 'COMPLETED'){
               this.router.navigate(['./payment/result'], { state: { data: details } });
+              this.cartService.removeAllProducts();
+            }
           });
         },
         onError: (error: any) => {
-          console.log(error);
+          this.router.navigate(['./payment/result']);
         },
       })
       .render(this.paymentRef.nativeElement);

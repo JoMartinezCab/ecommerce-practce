@@ -20,6 +20,7 @@ export class SidebarComponent implements OnInit {
   public categories: any = [];
   public cart: any[] = [];
   public total: number = 0;
+  public totalItems: number = 0;
 
   constructor(
     private authService: AuthService,
@@ -32,15 +33,14 @@ export class SidebarComponent implements OnInit {
 
     this.cart = this.cartService.getCart();
 
-    console.log(this.cart);
+    this.cartService.watch().subscribe((value) => {
+      if (value != undefined) this.cart = JSON.parse(value);
 
-    if (this.cart && this.cart.length > 0) {
-      this.total = this.cartService.totalCart(this.cart);
-
-      this.cartService.watch().subscribe((value) => {
-        if (value != undefined) this.cart = JSON.parse(value);
-      });
-    }
+      if (this.cart && this.cart.length > 0){
+        this.total = this.cartService.totalCart(this.cart);
+        this.totalItems = this.cartService.quantityItems(this.cart);
+      }
+    });
   }
 
   userExist() {
@@ -73,15 +73,16 @@ export class SidebarComponent implements OnInit {
     });
   }
 
-  removeAll(){
+  removeAll() {
     this.cartService.removeAllProducts();
     this.cart = [];
     this.total = 0;
+    this.totalItems = 0;
   }
 
-  removeProduct(posiion:number){
+  removeProduct(posiion: number) {
     console.log(posiion);
     this.cart = this.cartService.removeProduct(posiion);
-    this.total = this.cartService.totalCart(this.cart);
+    this.total = this.cartService.quantityItems(this.cart);
   }
 }

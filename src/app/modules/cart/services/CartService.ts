@@ -67,6 +67,13 @@ export class CartService {
     return total;
   }
 
+  quantityItems(cart: any[]) {
+    let total = 0;
+    cart.forEach((item: any) => (total += item.quantity));
+
+    return total;
+  }
+
   removeAllProducts(){
     localStorage.removeItem('cart');
   }

@@ -43,7 +43,9 @@
           #menuTrigger
           class="shoppingCart"
         >
-          <mat-icon>shopping_cart</mat-icon>
+          <i class="fa badge fa-lg" [attr.value]="totalItems">
+            <mat-icon>shopping_cart</mat-icon>
+          </i>
         </button>
 
         <mat-menu #menuCart="matMenu" class="cartProducts">

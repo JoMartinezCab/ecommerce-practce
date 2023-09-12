@@ -11,8 +11,12 @@ import { CartService } from 'src/app/modules/cart/services/CartService';
 export class PaymentComponent implements OnInit {
   public total = 0;
   public cart: any[] = [];
-  public displayedColumns:string[] = ['eliminar', 'Producto', 'Cantidad', 'Precio']
-
+  public displayedColumns: string[] = [
+    'eliminar',
+    'Producto',
+    'Cantidad',
+    'Precio',
+  ];
 
   @ViewChild('paymentRef', { static: true }) paymentRef!: ElementRef;
 
@@ -36,8 +40,8 @@ export class PaymentComponent implements OnInit {
   }
 
   paypalRender() {
-    window.paypal.Buttons(
-      {
+    window.paypal
+      .Buttons({
         style: {
           layout: 'horizontal',
           color: 'blue',
@@ -50,34 +54,32 @@ export class PaymentComponent implements OnInit {
               {
                 amount: {
                   value: this.total.toString(),
-                  currency_code: 'USD'
-                }
-              }
-            ]
+                  currency_code: 'USD',
+                },
+              },
+            ],
           });
         },
         onApprove: (data: any, actions: any) => {
           return actions.order.capture().then((details: any) => {
-            if (details.status === 'COMPLETED') {
-              this.router.navigate(['confirm']);
-              console.log(details);
-            }
+            if (details.status === 'COMPLETED')
+              this.router.navigate(['./payment/result'], { state: { data: details } });
           });
         },
         onError: (error: any) => {
           console.log(error);
-        }
-      }
-    ).render(this.paymentRef.nativeElement);
+        },
+      })
+      .render(this.paymentRef.nativeElement);
   }
 
-  removeAll(){
+  removeAll() {
     this.cartService.removeAllProducts();
     this.cart = [];
     this.total = 0;
   }
 
-  removeItem(posiion:number){
+  removeItem(posiion: number) {
     this.cart = this.cartService.removeProduct(posiion);
     this.total = this.cartService.totalCart(this.cart);
   }
